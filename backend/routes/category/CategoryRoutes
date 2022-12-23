@@ -1,0 +1,15 @@
+
+const express = require("express");
+const { categoryValidation} =require("../../validations/categoryValidation");
+const Category = require("../../controller/category/categoryController")
+const Authorization =require("../../service/Authorization")
+const routerCategory = express();
+
+routerCategory.post("/category-create", [categoryValidation,Authorization.authorization],Category.create)
+
+routerCategory.get("/categories/:page", Authorization.authorization, Category.categories)
+routerCategory.get("/fetch-category/:id", Authorization.authorization, Category.FetchCategory)
+routerCategory.put("/update-category/:id",[categoryValidation,Authorization.authorization],Category.UpdateCategory)
+routerCategory.delete("/delete-category/:id",Authorization.authorization,Category.DeleteCategory)
+routerCategory.get("/allCategories", Authorization.authorization, Category.allCategories)
+module.exports = routerCategory 
