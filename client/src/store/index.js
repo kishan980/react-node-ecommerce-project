@@ -15,6 +15,7 @@ const Store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
+      authService.middleware,
       categoryService.middleware,
       productService.middleware,
     ]),

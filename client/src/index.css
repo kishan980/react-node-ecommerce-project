@@ -2,8 +2,10 @@
 @import  "tailwindcss/components";
 @import "./style/button.css";
 @import "./style/form.css";
-@import  "tailwindcss/utilities";
 @import "./style/style.css";
+@import "./style/nav.css";
+@import "./style/header.css";
+@import  "tailwindcss/utilities";
 
 @layer components{
  

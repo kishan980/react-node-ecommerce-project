@@ -21,7 +21,7 @@ module.exports.register = async(req,res) =>{
             return res.status(201).send({msg:"Your account hash been created",data:user, token:token}) 
                 
             }else {
-                return res.status(401).send({errors:[{msg:`${email} is already taken`}]})              
+                return res.status(401).send({errors:[{msg:`${email} is already taken`, param:'email'}]})              
             }
         }catch(error){
             console.log(error)
@@ -53,10 +53,10 @@ module.exports.login =async(req,res)=>{
 
                      }
                     }else {
-                        return res.status(401).send({errors: [{msg: 'password is not match'}]})
+                        return res.status(401).send({errors: [{msg: 'password is not match', param:'password'}]})
                     }
             }else {
-                return res.status(401).send({errors: [{msg:`${email} is not found`}]})
+                return res.status(401).send({errors: [{msg:`${email} is not found`, param:'email'}]})
             }
         }catch(error){
             return res.status(500).send(`internal server error =>${error}`)
