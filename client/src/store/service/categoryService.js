@@ -17,11 +17,7 @@ const categoryService = createApi({
     return {
       createCategory: builder.mutation({
         query: (name) => {
-          return {
-            url: "category-create",
-            method: "POST",
-            body: name,
-          };
+          return { url: "category-create", method: "POST", body: name };
         },
         invalidatesTags: ["categories"],
       }),
@@ -30,47 +26,44 @@ const categoryService = createApi({
           return {
             url: `update-category/${data.id}`,
             method: "PUT",
-            body: { name: data.name },
+            body: {
+              name: data.name,
+            },
           };
         },
         invalidatesTags: ["categories"],
       }),
       deleteCategory: builder.mutation({
         query: (id) => {
-          return {
-            url: `/delete-category/${id}`,
-            method: "DELETE",
-          };
+          return { url: `/delete-category/${id}`, method: "DELETE" };
         },
         invalidatesTags: ["categories"],
       }),
       get: builder.query({
         query: (page) => {
-          return {
-            url: `categories/${page}`,
-            method: `GET`,
-          };
+          return { url: `categories/${page}`, method: `GET` };
         },
         provideTags: ["categories"],
       }),
       fetchCategory: builder.query({
         query: (id) => {
-          return {
-            url: `fetch-category/${id}`,
-            method: "GET",
-          };
+          return { url: `fetch-category/${id}`, method: "GET" };
         },
         provideTags: ["categories"],
       }),
 
       allCategory: builder.query({
-        query: ()=>{
-          return{
-            url:'allCategories',
-            method:"GET"
-          }
-        }
-      })
+        query: () => {
+          return { url: "allCategories", method: "GET" };
+        },
+        provideTags: ["categories"],
+      }),
+      randomCategories: builder.query({
+        query: () => {
+          return { url: `random-categories`, method: "GET" };
+        },
+        provideTags: ["categories"],
+      }),
     };
   },
 });
@@ -81,6 +74,7 @@ export const {
   useFetchCategoryQuery,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
-  useAllCategoryQuery
+  useAllCategoryQuery,
+  useRandomCategoriesQuery,
 } = categoryService;
 export default categoryService;

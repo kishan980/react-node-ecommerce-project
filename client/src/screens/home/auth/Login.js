@@ -8,6 +8,7 @@ import { useUserLoginMutation } from "../../../store/service/authService";
 import { setSuccess } from "../../../store/reducer/globalReducer";
 import { useForm } from "../../../hook/Form";
 import {showError} from"../../../utils/ShowError";
+import { setUserToken } from "../../../store/reducer/authReducer";
 
 const Login = () => {
     const [errors, setError] = useState([])
@@ -36,11 +37,12 @@ const Login = () => {
 
     useEffect(() =>{
         if(response.isSuccess){
-            localStorage.setItem('userToken', response?.data?.data)
+            localStorage.setItem('user-token', response?.data?.data)
             dispatch(setSuccess(response?.data?.msg))
+            dispatch(setUserToken(response?.data?.data))
             navigate("/user")
         }
-    })
+    }, [response.isSuccess])
 
     // const showError = (name) =>{
     //     const exist = errors.find(err =>err.param === name);

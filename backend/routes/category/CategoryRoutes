@@ -11,5 +11,6 @@ routerCategory.get("/categories/:page", Authorization.authorization, Category.ca
 routerCategory.get("/fetch-category/:id", Authorization.authorization, Category.FetchCategory)
 routerCategory.put("/update-category/:id",[categoryValidation,Authorization.authorization],Category.UpdateCategory)
 routerCategory.delete("/delete-category/:id",Authorization.authorization,Category.DeleteCategory)
-routerCategory.get("/allCategories", Authorization.authorization, Category.allCategories)
+routerCategory.get("/allCategories",  Category.allCategories)
+routerCategory.get("/random-categories",  Category.randomCategory)
 module.exports = routerCategory 

@@ -88,6 +88,17 @@ class Category {
             return res.status(500).send(`internal server error ${error.message} `)
         }
     }
+
+    async randomCategory(req, res){
+        try{
+            const categories = await CategoryModel.aggregate([
+                {$sample:{size:3}}
+            ])
+            return res.status(200).send({categories})
+        }catch(error){
+            return res.status(500).send("Internal server error")
+        }
+    }
 }
 
 module.exports = new Category

@@ -13,15 +13,24 @@ import Home from '../screens/home/Home';
 import Login from '../screens/home/auth/Login';
 import Register from './../screens/home/auth/Register';
 import Dashboard from './../screens/users/Dashboard';
+import UserRouter from './UserRoutes';
+import UserAuthRouter from './UserAuthRoutes';
+import CatProduct from './../screens/home/CatProduct';
 
 const Routing = () => {
   return (
     <BrowserRouter>
         <Routes>
                 <Route path="/" element={<Home/>} />
+                <Route path="cat-products/" element={<CatProduct/>} />
+                <Route path="cat-products/:name" element={<CatProduct/>} />
+                <Route element={<UserAuthRouter/>}>
                 <Route path="login" element={<Login/>}/>
                 <Route path="register" element={<Register/>}/>
+                </Route>
+                <Route element={<UserRouter/>} >
                 <Route path="user" element={<Dashboard/>}/>
+                </Route>
                 <Route path="auth">
                     <Route path="admin-login" element={<Public><AdminLogin/></Public>}/>
                     </Route>

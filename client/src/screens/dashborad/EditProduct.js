@@ -89,7 +89,7 @@ const EditProduct = () => {
   }, [response?.error?.data?.errors]);
 
   useEffect(() => {
-    console.log("ok", response?.error?.status);
+   
     if (response?.error?.status === 500) {
       toast.error(response?.error?.data?.msg);
     }
