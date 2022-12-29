@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-const Pagination = ({ page, parPage, count, path }) => {
+const Pagination = ({ page, parPage, count, path, theme }) => {
   const totalLinks = Math.ceil(count / parPage);
 
   let startLoop = page;
@@ -18,7 +18,12 @@ const Pagination = ({ page, parPage, count, path }) => {
     for (let i = startLoop; i <= endLoop; i++) {
       allLinks.push(
         <li key={i}>
-          <Link className={`pagination-link ${page === i  && 'bg-gray-400 text-gray-900'}`} to={`/${path}/${i}`}>
+          <Link
+            className={` ${
+              theme === "light" ? "pagination-link-light" : "pagination-link"
+            } ${page === i && "bg-indigo-400 text-white"}`}
+            to={`/${path}/${i}`}
+          >
             {i}
           </Link>
         </li>
@@ -31,7 +36,12 @@ const Pagination = ({ page, parPage, count, path }) => {
     if (page < totalLinks) {
       return (
         <li>
-          <Link className="pagination-link" to={`/${path}/${page + 1}`}>
+          <Link
+            className={`${
+              theme === "light" ? "pagination-link-light" : "pagination-link"
+            }`}
+            to={`/${path}/${page + 1}`}
+          >
             <i className="bi bi-chevron-double-right"></i>
           </Link>
         </li>
@@ -43,7 +53,12 @@ const Pagination = ({ page, parPage, count, path }) => {
     if (page > 1) {
       return (
         <li>
-          <Link className="pagination-link" to={`/${path}/${page - 1}`}>
+          <Link
+            className={`${
+              theme === "light" ? "pagination-link-light" : "pagination-link"
+            }`}
+            to={`/${path}/${page - 1}`}
+          >
             <i className="bi bi-chevron-double-left"></i>
           </Link>
         </li>
@@ -56,7 +71,7 @@ const Pagination = ({ page, parPage, count, path }) => {
       <ul className="flex mt-2">
         {prev()}
         {links()}
-        {next()}{" "}
+        {next()}
       </ul>
     )
   );

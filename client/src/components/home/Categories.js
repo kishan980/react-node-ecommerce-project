@@ -14,7 +14,7 @@ export const Categories = () => {
         {[1,2,3,4,5,6].map(item=>(
             <div className="w-6/12 sm:w-4/12 md:w-3/12 lg:w-[20%]  xl:w-2/12 p-4 " key={item}>
                     <Skeleton>
-                        <Thumbnail />
+                        <Thumbnail height="150px" />
                     </Skeleton>
             </div>
         ))}

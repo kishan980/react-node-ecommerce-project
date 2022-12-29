@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import Colors from "./../../components/Colors";
 import SizeList from "./../../components/SizeList";
 import parser from "html-react-parser";
+import h2p from "html2plaintext"
 import {
   useGetProductQuery,
   useUpdateProductMutation
@@ -110,7 +111,7 @@ useEffect(() =>{
     if (!fetching) {
       setState(product);
       setSizeList(product.sizes);
-      setValue(parser(product.description))
+      setValue(h2p(product.description))
     }
   }, [product]);
   return (
@@ -195,6 +196,7 @@ useEffect(() =>{
                   id="categories"
                   className="form-control"
                   onChange={handleInput}
+                  value={state.category}
                 >
                   <option value="">Choose categories</option>
 

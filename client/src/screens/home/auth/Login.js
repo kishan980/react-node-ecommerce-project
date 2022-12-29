@@ -24,7 +24,6 @@ const Login = () => {
     const onSubmit = (e)=>{
         e.preventDefault();
         loginUser(state)
-        console.log(state)
     }
 
     useEffect(() =>{

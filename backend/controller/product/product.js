@@ -121,7 +121,8 @@ class product  {
   async getProduct(req, res){
     const {id} = req.params;
     try{
-      const product = await ProductSchema.findOne({_id:id}).select(['-image1','-image2','-image3'])
+      // const product = await ProductSchema.findOne({_id:id}).select(['-image1','-image2','-image3'])
+      const product = await ProductSchema.findOne({_id:id})
       return res.status(200).send(product)
     }catch(error){
       return res.status(500).send(`internal server error${error.message}`)

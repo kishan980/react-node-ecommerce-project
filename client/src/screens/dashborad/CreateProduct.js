@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { TwitterPicker } from "react-color";
-import ReactQuill from 'react-quill';
-import toast, {Toaster} from "react-hot-toast";
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill";
+import toast, { Toaster } from "react-hot-toast";
+import "react-quill/dist/quill.snow.css";
 import Wrapper from "./Wrapper";
 import ScreenHeader from "./../../components/ScreenHeader";
 import { useAllCategoryQuery } from "../../store/service/categoryService";
@@ -12,14 +12,14 @@ import Spinner from "./../../components/Spinner";
 import { v4 as uuidv4 } from "uuid";
 import Colors from "./../../components/Colors";
 import SizeList from "./../../components/SizeList";
-import ImagesPreview from './../../components/ImagesPreview';
-import {useCreateProductMutation} from "../../store/service/productService";
-import {setSuccess} from "../../store/reducer/globalReducer";
+import ImagesPreview from "./../../components/ImagesPreview";
+import { useCreateProductMutation } from "../../store/service/productService";
+import { setSuccess } from "../../store/reducer/globalReducer";
 const CreateProduct = () => {
   const { data = [], isFetching } = useAllCategoryQuery();
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const [value, setValue] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [value, setValue] = useState("");
   const [state, setState] = useState({
     title: "",
     price: 0,
@@ -27,17 +27,17 @@ const CreateProduct = () => {
     stock: 0,
     category: "",
     colors: [],
-    image1:"",
-    image2:"",
-    image3:""
+    image1: "",
+    image2: "",
+    image3: "",
   });
 
-  const [preview , setPreview]= useState({
-    image1:"",
-    image2:"",
-    image3:""
-  })
- 
+  const [preview, setPreview] = useState({
+    image1: "",
+    image2: "",
+    image3: "",
+  });
+
   const [sizes] = useState([
     { name: "xsm" },
     { name: "sm" },
@@ -55,7 +55,6 @@ const CreateProduct = () => {
 
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
-   
   };
 
   const saveColors = (color) => {
@@ -80,51 +79,50 @@ const CreateProduct = () => {
     setSizeList(deleteData);
   };
 
-  const handleImage = (e) =>{
+  const handleImage = (e) => {
     // console.log(e.target.files)
-    if(e.target.files.length !==0){
-        setState({...state, [e.target.name]:e.target.files[0]})
-        const reader = new FileReader();
-        reader.onloadend = () =>{
-            setPreview({...preview, [e.target.name]: reader.result})
-        }
-        reader.readAsDataURL(e.target.files[0])
+    if (e.target.files.length !== 0) {
+      setState({ ...state, [e.target.name]: e.target.files[0] });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview({ ...preview, [e.target.name]: reader.result });
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
-  }
-  const [createNewProduct, response] = useCreateProductMutation()
-  const createProduct =(e) =>{
-    e.preventDefault()
+  };
+  const [createNewProduct, response] = useCreateProductMutation();
+  const createProduct = (e) => {
+    e.preventDefault();
     const fromData = new FormData();
-    fromData.append("data",JSON.stringify(state))
-    fromData.append("sizes",JSON.stringify(sizeList))
-    fromData.append("description",value)
-    fromData.append("image1", state.image1)
-    fromData.append("image2", state.image2)
-    fromData.append("image3", state.image3)
-    createNewProduct(fromData)
-  }
+    fromData.append("data", JSON.stringify(state));
+    fromData.append("sizes", JSON.stringify(sizeList));
+    fromData.append("description", value);
+    fromData.append("image1", state.image1);
+    fromData.append("image2", state.image2);
+    fromData.append("image3", state.image3);
+    createNewProduct(fromData);
+  };
 
-  useEffect(() =>{
-    if(!response?.isSuccess){
-      response?.error?.data?.errors?.map(err =>{
-        toast.error(err.msg)
-      })
+  useEffect(() => {
+    if (!response?.isSuccess) {
+      response?.error?.data?.errors?.map((err) => {
+        toast.error(err.msg);
+      });
     }
-   
-  },[response?.error?.data?.errors])
+  }, [response?.error?.data?.errors]);
 
-useEffect(() =>{
-  if(response?.error?.status === 500){
-    toast.error(response?.error?.data?.msg)
-  }
-},[response?.error?.status])
+  useEffect(() => {
+    if (response?.error?.status === 500) {
+      toast.error(response?.error?.data?.msg);
+    }
+  }, [response?.error?.status]);
 
-useEffect(() =>{
-  if(response?.isSuccess){
-    dispatch(setSuccess(response?.data?.msg))
-    navigate("/dashboard/products")
-  }
-})
+  useEffect(() => {
+    if (response?.isSuccess) {
+      dispatch(setSuccess(response?.data?.msg));
+      navigate("/dashboard/products");
+    }
+  });
 
   return (
     <Wrapper>
@@ -132,7 +130,7 @@ useEffect(() =>{
         <Link to="/dashboard/products" className="btn btn-dark">
           <i className="bi bi-arrow-left-short"></i>Product List
         </Link>
-        <Toaster position="top=right" reverseOrder={true}/>
+        <Toaster position="top=right" reverseOrder={true} />
       </ScreenHeader>
 
       <div className="flex flex-wrap -mx-3">
@@ -207,6 +205,7 @@ useEffect(() =>{
                     id="categories"
                     className="form-control"
                     onChange={handleInput}
+                    value={state.category}
                   >
                     <option value="">Choose categories</option>
 
@@ -248,44 +247,73 @@ useEffect(() =>{
             </div>
             <div className="w-full p-3">
               <label htmlFor="file" className="label">
-               Images
+                Images
               </label>
-              <input type="file" name="image1" id="image1" className="input-file" onChange={handleImage}/>
+              <input
+                type="file"
+                name="image1"
+                id="image1"
+                className="input-file"
+                onChange={handleImage}
+              />
             </div>
 
             <div className="w-full p-3">
               <label htmlFor="file" className="label">
-               Images
+                Images
               </label>
-              <input type="file" name="image2" id="image2" className="input-file" onChange={handleImage}/>
+              <input
+                type="file"
+                name="image2"
+                id="image2"
+                className="input-file"
+                onChange={handleImage}
+              />
             </div>
-
 
             <div className="w-full p-3">
               <label htmlFor="file" className="label">
-               Images
+                Images
               </label>
-              <input type="file" name="image3" id="image3" className="input-file" onChange={handleImage}/>
+              <input
+                type="file"
+                name="image3"
+                id="image3"
+                className="input-file"
+                onChange={handleImage}
+              />
             </div>
 
             <div className="w-full p-3">
-            <label htmlFor="description" className="label">
-             Description
-            </label>
-            <ReactQuill theme="snow" id="description" value={value} onChange={setValue} placeholder="Description..." className="placeholder:text-white" />
-          </div>
-          <div className="w-full p-3">
-                    <input type="submit" value={response.isLoading ? "loading...":'save product'} disabled={response.isLoading?true:false} className="btn btn-indigo"/>
-          </div>
+              <label htmlFor="description" className="label">
+                Description
+              </label>
+              <ReactQuill
+                theme="snow"
+                id="description"
+                value={value}
+                onChange={setValue}
+                placeholder="Description..."
+                className="placeholder:text-white"
+              />
+            </div>
+            <div className="w-full p-3">
+              <input
+                type="submit"
+                value={response.isLoading ? "loading..." : "save product"}
+                disabled={response.isLoading ? true : false}
+                className="btn btn-indigo"
+              />
+            </div>
           </div>
         </form>
 
         <div className="w-full xl:w-4/12 p-3">
           <Colors colors={state.colors} deleteColor={deleteColor} />
           <SizeList list={sizeList} deleteSize={deleteSize} />
-          <ImagesPreview url={preview.image1} heading="image 1"/>
-          <ImagesPreview url={preview.image2} heading="image 2"/>
-          <ImagesPreview url={preview.image3} heading="image 3"/>
+          <ImagesPreview url={preview.image1} heading="image 1" />
+          <ImagesPreview url={preview.image2} heading="image 2" />
+          <ImagesPreview url={preview.image3} heading="image 3" />
         </div>
       </div>
     </Wrapper>
