@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const globalReducer = createSlice({
         name:"global",
         initialState:{
-            success:''
+            success:'',
+            searchBar:false
         },
         reducers:{
             setSuccess:(state, action)=>{
@@ -11,9 +12,12 @@ const globalReducer = createSlice({
             },
             clearMessage:(state, action) =>{
                 state.success= ''
+            },
+            toggleSearchBar:(state)=>{
+                state.searchBar = !state.searchBar
             }
         }
 })
 
-export const { setSuccess,clearMessage} = globalReducer.actions
+export const { setSuccess,clearMessage,toggleSearchBar} = globalReducer.actions
 export default  globalReducer.reducer

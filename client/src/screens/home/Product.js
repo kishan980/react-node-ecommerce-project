@@ -5,6 +5,7 @@ import { FiChevronRight } from "react-icons/fi";
 import { useGetProductQuery } from "../../store/service/productService";
 import { useParams } from "react-router-dom";
 import Details from "../../components/home/Details";
+import ProductLoader from './../../components/home/ProductLoader';
 const Product = () => {
   const { name } = useParams();
   console.log("🚀 ~ file: Product.js:9 ~ Product ~ name", name);
@@ -16,7 +17,7 @@ const Product = () => {
 
       <div className="my-container mt-[20px]">
         {isFetching ? (
-          "loading"
+          <ProductLoader/>
         ) : (
          <>
          <ul className="flex items-center">
@@ -32,11 +33,7 @@ const Product = () => {
          </li>
          <FiChevronRight  className="block mx-2"/>
        </ul>
-       <div className="flex flex-wrap">
-       {
-        data.length > 0 && <Details product={data}/>
-       }
-       </div>
+       <Details product={data}/>
          </>
         )}
       </div>

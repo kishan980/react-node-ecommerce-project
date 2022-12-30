@@ -10,5 +10,6 @@ routeProduct.get("/products/:page", [authorization.authorization,],product.get)
 routeProduct.get("/pro/:id",product.getProduct)
 routeProduct.put("/update-product", [authorization.authorization,productValidation],product.updateProduct)
 routeProduct.delete("/delete-product/:id", [authorization.authorization,],product.deleteProduct)
-routeProduct.get("/cat-products/:name/:page", HomeProduct.catProducts)
+routeProduct.get("/cat-products/:name/:page?", HomeProduct.catProducts)
+routeProduct.get("/search-products/:keyword/:page", HomeProduct.catProducts)
 module.exports = routeProduct

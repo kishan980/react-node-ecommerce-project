@@ -17,6 +17,7 @@ import UserRouter from './UserRoutes';
 import UserAuthRouter from './UserAuthRoutes';
 import CatProduct from './../screens/home/CatProduct';
 import Product from './../screens/home/Product';
+import SearchProduct from '../screens/home/SearchProduct';
 
 const Routing = () => {
   return (
@@ -25,6 +26,7 @@ const Routing = () => {
                 <Route path="/" element={<Home/>} />
                 <Route path="cat-products/:name" element={<CatProduct/>} />
                 <Route path="cat-products/:name/:page" element={<CatProduct/>} />
+                <Route path="search-products/:keyword/:page" element={<SearchProduct/>} />
                 <Route path="product/:name"  element={<Product/>} />
                 <Route element={<UserAuthRouter/>}>
                 <Route path="login" element={<Login/>}/>

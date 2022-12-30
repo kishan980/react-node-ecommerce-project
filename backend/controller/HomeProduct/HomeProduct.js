@@ -1,16 +1,18 @@
-const { where } = require("../../models/Product");
+
 const ProductModel = require("../../models/Product");
 class HomeProducts {
   async catProducts(req, res) {
-    const { name, page } = req.params;
+    const { name, page , keyword} = req.params;
     const parPage = 5;
     const skip = (page - 1) * parPage;
+    const option = name ? {category:name}: keyword && {title:{$regex: `${keyword}`, $options:"i"}}
+    if(page){
     try {
-      const count = await ProductModel.find({ category: name })
+      const count = await ProductModel.find({ ...option })
         .where("stock")
         .gt(0)
         .countDocuments();
-      const response = await ProductModel.find({ category: name })
+      const response = await ProductModel.find({ ...option })
         .where("stock")
         .gt(0)
         .skip(skip)
@@ -20,6 +22,14 @@ class HomeProducts {
     } catch (error) {
       console.log(error.message);
     }
+  }else {
+    const response =  await ProductModel.find({...option})
+    .where("stock")
+    .gt(0)
+    .limit(4)
+    .sort({updatedAt:-1})
+    return res.status(200).send({products: response})
+  }
   }
 }
 
