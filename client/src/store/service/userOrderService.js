@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const orderService = createApi({
+const userOrderService = createApi({
 
-    reducerPath:'orders',
+    reducerPath:'userOderService',
     tagTypes:"orders",
     baseQuery: fetchBaseQuery({
         baseUrl:'http://localhost:4000/api/order/',
@@ -17,9 +17,9 @@ const orderService = createApi({
         return {
          
                 getOrders: builder.query({
-                    query: page =>{
+                    query: data =>{
                         return {
-                            url:`orders?page=${page}`,
+                            url:`orders?page=${data.page}&userId=${data.userId}`,
                             method:"GET"
                         }
                     },
@@ -33,19 +33,10 @@ const orderService = createApi({
                         }
                     },
                     providesTags:['orders']
-                }),
-                deliverOrder: builder.mutation({
-                    query: id =>{
-                        return {
-                            url:`orders-deliver/${id}`,
-                            method:"PUT"
-                        }
-                    },
-                    invalidatesTags:['orders']
                 })
         }
     }
 })
 
-export const {useGetOrdersQuery, useGetOrdersDetailsQuery, useDeliverOrderMutation } = orderService
-export default orderService;
+export const {useGetOrdersQuery, useGetOrdersDetailsQuery } = userOrderService
+export default userOrderService;

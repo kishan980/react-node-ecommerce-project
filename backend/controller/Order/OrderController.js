@@ -1,12 +1,13 @@
 const OrderModel = require("../../models/Order");
 class OrderController {
   async getOrders(req, res) {
-    const { page } = req.params;
-    const parPage = 1;
-    const skip = (page - 1) * parPage;
+    const query = req.query;
+    const parPage = 10;
+    const skip = (query.page - 1) * parPage;
+    const optional = query.userId ? {userId:query.userId} :{};
     try {
-      const count = await OrderModel.find({}).countDocuments();
-      const response = await OrderModel.find({})
+      const count = await OrderModel.find(optional).countDocuments();
+      const response = await OrderModel.find(optional)
         .populate("userId", "-password -createdAt -updatedAt -admin")
         .populate(
           "productId",
@@ -32,6 +33,17 @@ class OrderController {
         .status(500)
         .json({ msg: "internal server error", error: error });
     }
+  }
+  
+  async deliverOrder(req, res){
+    const {id}= req.params;
+    try{
+      const updateProduct = await OrderModel.findByIdAndUpdate(id, {status:true}, {new:true})
+      return res.status(200).send({msg:"Product has been send to customer and it's on the way right now"})
+    }catch(error){
+      return res.status(500).send({errors:error.message})
+    }
+
   }
 }
 

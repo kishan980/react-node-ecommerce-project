@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/create-checkout-session", authorization.authorization,  PaymentController.paymentProcess);
 
-router.post('/webhook',authorization.authorization,  express.raw({type: 'application/json'}), PaymentController.checkOutSession);
+router.post('/webhook',  express.raw({type: 'application/json'}), PaymentController.checkOutSession);
 
 router.get("/verify-payment/:id",authorization.authorization,  PaymentController.paymentVerify)
 module.exports = router;

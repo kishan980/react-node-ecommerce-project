@@ -21,6 +21,8 @@ import SearchProduct from '../screens/home/SearchProduct';
 import Cart from '../screens/home/Cart';
 import Orders from '../screens/dashborad/Orders';
 import OrderDetail from './../screens/dashborad/OrderDetail';
+import UserOrder from '../screens/users/UserOrder';
+import UserOrderDetails from './../screens/users/UserOrderDetails';
 
 const Routing = () => {
   return (
@@ -38,6 +40,9 @@ const Routing = () => {
                 </Route>
                 <Route element={<UserRouter/>} >
                 <Route path="user" element={<Dashboard/>}/>
+                <Route path="orders" element={<UserOrder/>} />
+                <Route path="orders/:page" element={<UserOrder/>} />
+                <Route path="user-order-details/:id" element={<UserOrderDetails/>}/>
                 </Route>
                 <Route path="auth">
                     <Route path="admin-login" element={<Public><AdminLogin/></Public>}/>

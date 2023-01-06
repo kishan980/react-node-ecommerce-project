@@ -24,6 +24,7 @@ class paymentController {
         cart: JSON.stringify(orderData),
       },
     });
+    console.log("🚀 ~ file: PaymentController.js:27 ~ paymentController ~ paymentProcess ~ customer", customer)
     const session = await stripe.checkout.sessions.create({
       shipping_address_collection: { allowed_countries: ["IN", "PK", "BD"] },
       // customer_email:user.email,
@@ -96,7 +97,7 @@ class paymentController {
         customer = JSON.parse(customer?.metadata?.cart);
         customer.forEach(async (ctr) => {
           try {
-            await OrderModel.create({
+          const orderdata=  await OrderModel.create({
               productId: ctr._id,
               userId: ctr.userId,
               size: ctr.size,
@@ -104,6 +105,7 @@ class paymentController {
               quantity: ctr.quantity,
               address: data.customer_details.address,
             });
+          console.log("🚀 ~ file: PaymentController.js:108 ~ paymentController ~ customer.forEach ~ orderdata", orderdata)
 
             const product = await ProductModel.findOne({ _id: ctr._id });
             if (product) {
@@ -111,11 +113,12 @@ class paymentController {
               if (stock < 0) {
                 stock = 0;
               }
-              await ProductModel.findByIdAndUpdate(
-                { _id: ctr._id },
+             const updateData= await ProductModel.findByIdAndUpdate(
+                 ctr._id,
                 { stock },
                 { new: true }
               );
+             console.log("🚀 ~ file: PaymentController.js:121 ~ paymentController ~ customer.forEach ~ updateData", updateData)
             }
           } catch (error) {
             console.log(error.message);

@@ -8,6 +8,7 @@ import homeProductsService from "./service/homeProducts";
 import cartReducer from "./reducer/cartReducer";
 import paymentService from "./service/paymentService";
 import orderService from "./service/orderService";
+import userOrderService from "./service/userOrderService";
 
 
 
@@ -19,6 +20,7 @@ const Store = configureStore({
     [homeProductsService.reducerPath]:homeProductsService.reducer,
     [paymentService.reducerPath]:paymentService.reducer,
     [orderService.reducerPath]:orderService.reducer,
+    [userOrderService.reducerPath]:userOrderService.reducer,
     authReducer: authReducer,
     globalReducer: globalReducer,
     cartReducer:cartReducer
@@ -30,7 +32,8 @@ const Store = configureStore({
       productService.middleware,
       homeProductsService.middleware,
       paymentService.middleware,
-      orderService.middleware
+      orderService.middleware,
+      userOrderService.middleware
     ]),
 });
 

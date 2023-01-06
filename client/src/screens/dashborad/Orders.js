@@ -18,7 +18,7 @@ const Orders = () => {
       {!isFetching ? (
         data?.orders?.length > 0 && (
           <>
-            <div>
+            <div className="overflow-x-auto">
               <table className="dashboard-table ">
                 <thead>
                   <tr className="dashboard-tr">
@@ -41,7 +41,7 @@ const Orders = () => {
                         <img
                           src={`/images/${order.productId.image1}`}
                           alt={order.productId.image1}
-                          className="w-[50px] h-[50px] rounded-full object-cover"
+                          className="w-[35px] h-[35px] md:w-[50px] md:h-[50px] rounded-full object-cover"
                         />
                       </td>
                      
