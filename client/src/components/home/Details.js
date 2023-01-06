@@ -7,6 +7,11 @@ import DetailsCard from "./DetailsCard";
 import parse from "html-react-parser";
 import Quantity from "./Quantity";
 import { motion } from "framer-motion";
+import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch } from "react-redux";
+import { addCart } from "../../store/reducer/cartReducer";
+import  {discountPrice}  from './../../utils/discountPrice';
+
 const Details = ({ product }) => {
   const [sizeState, setSizeState] = useState(
     product?.sizes?.length > 0 && product.sizes[0].name
@@ -16,13 +21,13 @@ const Details = ({ product }) => {
   );
 
   const [quantity, setQuantity] = useState(1);
-  const percentage = product.discount / 100;
-  const discountPrice = product.price - product.price * percentage;
+  // const percentage = product.discount / 100;
+  // const discountPrice = product.price - product.price * percentage;
+ 
   let desc = h2p(product.description);
   desc = parse(desc);
-
+  const dispatch = useDispatch()
   const inCrement = () => {
-    console.log(quantity, "dasfdf");
     setQuantity(quantity + 1);
   };
   const deCerement = () => {
@@ -30,10 +35,34 @@ const Details = ({ product }) => {
       setQuantity(quantity - 1);
     }
   };
+  const discountPriceData = discountPrice(product.price, product.discount)
+  
+  const addToCart = () => {
+    const {
+      ["colors"]: colors,
+      ["sizes"]: sizes,
+      ["createdAt"]: createdAt,
+      ["updatedAt"]: updatedAt,
+      ...newProduct
+    } = product;
+    
+    
+    newProduct['size'] = sizeState;
+    newProduct['color']=colorState;
+    newProduct["quantity"]=quantity
+    const cart = localStorage.getItem("cart")
+    const cartItem = cart ? JSON.parse(cart) :[];
+    const checkItem =  cartItem.find(items => items._id === newProduct._id)
+    if(!checkItem){
+      dispatch(addCart(newProduct))
+      cartItem.push(newProduct)
+      localStorage.setItem('cart', JSON.stringify(cartItem))
+    }else {
+      toast.error(`${newProduct.title} is already in cart`);
+       return
+    }
 
-  const addToCart = ()=>{
-
-  }
+  };
 
   return (
     <motion.div
@@ -41,6 +70,7 @@ const Details = ({ product }) => {
       animate={{ opacity: 1 }}
       className="flex flex-wrap -mx-5"
     >
+    <Toaster/>
       <div className="w-full order-2 md:order-1 md:w-6/12">
         <div className="flex flex-wrap -mx-1">
           <DetailsCard image={product.image1} />
@@ -54,7 +84,7 @@ const Details = ({ product }) => {
         </h1>
         <div className="flex justify-between my-5">
           <span className="text-2xl font-bold text-gray-900">
-            {currency.format(discountPrice, { code: "USD" })}
+            {currency.format(discountPriceData, { code: "USD" })}
           </span>
           <span className="text-xl line-through text-gray-900">
             {currency.format(product.price, { code: "USD" })}
@@ -69,10 +99,17 @@ const Details = ({ product }) => {
             <div className="flex flex-wrap -mx-1">
               {product.sizes.map((size) => (
                 <div
-                  className={`p-2 border m-1 border-gray-300 rounded cursor-pointer ${sizeState === size.name && "bg-indigo-600"}`}
-                  key={size.name} onClick={()=> setSizeState(size.name)}
+                  className={`p-2 border m-1 border-gray-300 rounded cursor-pointer ${
+                    sizeState === size.name && "bg-indigo-600"
+                  }`}
+                  key={size.name}
+                  onClick={() => setSizeState(size.name)}
                 >
-                  <span className={`text-sm font-semibold uppercase text-gray-900 ${sizeState === size.name ? "text-white" :"text-gray-900"}`}>
+                  <span
+                    className={`text-sm font-semibold uppercase text-gray-900 ${
+                      sizeState === size.name ? "text-white" : "text-gray-900"
+                    }`}
+                  >
                     {size.name}
                   </span>
                 </div>
@@ -91,12 +128,16 @@ const Details = ({ product }) => {
                 <div
                   key={color.color}
                   className="border border-gray-300 rounded m-1 p-1 cursor-pointer"
-                  onClick={()=>setColorState(color.color)}
+                  onClick={() => setColorState(color.color)}
                 >
                   <span
                     className="min-w-[40px] min-h-[40px] rounded flex items-center justify-center"
                     style={{ backgroundColor: color.color }}
-                  >{colorState === color.color && <BsCheck2 className="text-white" size={40}/>}</span>
+                  >
+                    {colorState === color.color && (
+                      <BsCheck2 className="text-white" size={40} />
+                    )}
+                  </span>
                 </div>
               ))}
             </div>
@@ -112,7 +153,9 @@ const Details = ({ product }) => {
             />
           </div>
           <div className="flex sm:w-6/12 p-3">
-            <button className="btn btn-indigo" onClick={addToCart}>add to cart</button>
+            <button className="btn btn-indigo" onClick={addToCart}>
+              add to cart
+            </button>
           </div>
         </div>
 

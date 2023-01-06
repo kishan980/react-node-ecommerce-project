@@ -12,7 +12,7 @@ const Sidebar = ({side,closeSideBar}) => {
                 <i className='bi bi-card-list mr-2 inline-block text-lg'></i><Link to="/dashboard/products" className='text-base capitalize'>products</Link>
             </li>
             <li className='px-4 cursor-pointer transition-all text-white flex items-center hover:bg-gray-600'>
-            <i className='bi bi-bag-check mr-2 inline-block text-lg'></i><Link to="/dashboard/products" className='text-base capitalize'>Orders</Link>
+            <i className='bi bi-bag-check mr-2 inline-block text-lg'></i><Link to="/dashboard/orders" className='text-base capitalize'>Orders</Link>
         </li>
         <li className='px-4 cursor-pointer transition-all text-white flex items-center hover:bg-gray-600'>
         <i className='bi bi-people-fill mr-2 inline-block text-lg'></i><Link to="/dashboard/products" className='text-base capitalize'>customer</Link>

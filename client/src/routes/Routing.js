@@ -18,6 +18,9 @@ import UserAuthRouter from './UserAuthRoutes';
 import CatProduct from './../screens/home/CatProduct';
 import Product from './../screens/home/Product';
 import SearchProduct from '../screens/home/SearchProduct';
+import Cart from '../screens/home/Cart';
+import Orders from '../screens/dashborad/Orders';
+import OrderDetail from './../screens/dashborad/OrderDetail';
 
 const Routing = () => {
   return (
@@ -27,6 +30,7 @@ const Routing = () => {
                 <Route path="cat-products/:name" element={<CatProduct/>} />
                 <Route path="cat-products/:name/:page" element={<CatProduct/>} />
                 <Route path="search-products/:keyword/:page" element={<SearchProduct/>} />
+                <Route path="cart" element={<Cart/>}/>
                 <Route path="product/:name"  element={<Product/>} />
                 <Route element={<UserAuthRouter/>}>
                 <Route path="login" element={<Login/>}/>
@@ -48,6 +52,9 @@ const Routing = () => {
                       <Route path="create-category" element={<Private><CreateCategory/></Private>}/>
                       <Route path="update-category/:id" element={<Private><UpdateCategory/></Private>}/>
                       <Route path="create-product" element={<Private><CreateProduct/></Private>}/>
+                      <Route path="orders" element={<Orders/>} />
+                      <Route path="orders/:page" element={<Orders/>} />
+                      <Route path="order-details/:id" element={<OrderDetail/>} />
                     </Route>
 
         </Routes>

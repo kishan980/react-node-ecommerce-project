@@ -6,6 +6,7 @@
 @import "./style/nav.css";
 @import "./style/header.css";
 @import  "tailwindcss/utilities";
+@import "./style/table.css";
 
 @layer components{
  

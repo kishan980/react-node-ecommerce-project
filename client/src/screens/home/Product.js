@@ -8,9 +8,7 @@ import Details from "../../components/home/Details";
 import ProductLoader from './../../components/home/ProductLoader';
 const Product = () => {
   const { name } = useParams();
-  console.log("🚀 ~ file: Product.js:9 ~ Product ~ name", name);
   const { data, isFetching } = useGetProductQuery(name);
-  console.log("🚀 ~ file: Product.js:10 ~ Product ~ data", data);
   return (
     <>
       <Nav />

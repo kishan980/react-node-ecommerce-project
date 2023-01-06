@@ -10,6 +10,7 @@ import { toggleSearchBar } from '../../store/reducer/globalReducer';
 const Nav = () => {
         const dispatch = useDispatch()
         const {userToken, user}= useSelector(state=>state.authReducer)
+        const {items,total} = useSelector(state=> state.cartReducer)
   return (
         <>
     <nav className='nav'>
@@ -25,7 +26,7 @@ const Nav = () => {
                                 userToken ?<li className='nav-li'><Link to="/user" className='nav-link'>{user?.name}</Link></li>:
                                 <li className='nav-li'><Link to="/login" className='nav-link'>Sign in</Link></li>
                         }
-                        <li className='nav-li  relative'><Link to="/cart"><BsHandbag size={20}/><span className='nav-circle'>10</span></Link></li>
+                        <li className='nav-li  relative'><Link to="/cart"><BsHandbag size={20}/><span className='nav-circle'>{items}</span></Link></li>
 
                         </ul>
                     </div>
