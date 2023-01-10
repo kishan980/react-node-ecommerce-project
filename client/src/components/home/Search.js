@@ -5,22 +5,22 @@ import { motion } from "framer-motion";
 import { toggleSearchBar } from "../../store/reducer/globalReducer";
 import { useNavigate } from "react-router-dom";
 const Search = () => {
-    const navigate = useNavigate()
-    const [state, setState] = useState('')
+  const navigate = useNavigate();
+  const [state, setState] = useState("");
   const { searchBar } = useSelector((state) => state.globalReducer);
-  const dispatch = useDispatch()
-  const closeSearch = e =>{
-   const id =e.target.getAttribute('id')
-   if(id === "search"){
-    dispatch(toggleSearchBar())
-   }
-  }
-  const searchProducts = ()=>{
-    if(state ===""){
+  const dispatch = useDispatch();
+  const closeSearch = (e) => {
+    const id = e.target.getAttribute("id");
+    if (id === "search") {
+      dispatch(toggleSearchBar());
+    }
+  };
+  const searchProducts = () => {
+    if (state === "") {
       return;
     }
-    navigate(`/search-products/${state}/1`)
-  } 
+    navigate(`/search-products/${state}/1`);
+  };
   return (
     searchBar && (
       <motion.div
@@ -41,7 +41,10 @@ const Search = () => {
               className="w-full bg-white h-[50px] rounded outline-none pl-5 pr-14"
               placeholder="Search products.."
             />
-            <FiSearch className="absolute top-[14px]  right-12 text-2xl text-gray-500 cursor-pointer"  onClick={searchProducts}/>
+            <FiSearch
+              className="absolute top-[14px]  right-12 text-2xl text-gray-500 cursor-pointer"
+              onClick={searchProducts}
+            />
           </div>
         </div>
       </motion.div>

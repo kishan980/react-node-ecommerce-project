@@ -37,8 +37,18 @@ const orderService = createApi({
                 deliverOrder: builder.mutation({
                     query: id =>{
                         return {
-                            url:`orders-deliver/${id}`,
+                            url:`orders-deliver?id=${id}&status=delivered`,
                             method:"PUT"
+                        }
+                    },
+                    invalidatesTags:['orders']
+                }),
+                postReview: builder.mutation({
+                    query: (data)=>{
+                        return {
+                            url:`/add-review`,
+                            method:"POST",
+                            body:data
                         }
                     },
                     invalidatesTags:['orders']
@@ -47,5 +57,5 @@ const orderService = createApi({
     }
 })
 
-export const {useGetOrdersQuery, useGetOrdersDetailsQuery, useDeliverOrderMutation } = orderService
+export const {useGetOrdersQuery, useGetOrdersDetailsQuery, useDeliverOrderMutation, usePostReviewMutation } = orderService
 export default orderService;

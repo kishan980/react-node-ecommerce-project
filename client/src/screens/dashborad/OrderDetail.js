@@ -12,6 +12,7 @@ import {
 import { discountPrice } from "./../../utils/discountPrice";
 import Spinner from "./../../components/Spinner";
 import { BsPrinter } from "react-icons/bs";
+import moment from "moment";
 const OrderDetail = () => {
   const { id } = useParams();
   const componentRef = useRef();
@@ -68,6 +69,19 @@ const OrderDetail = () => {
             product name
             <span className="text-lg text-gray-300 ml-4 capitalize">
               {data?.details?.productId?.title}
+            </span>
+          </h3>
+          <h3 className="capitalize text-gray-400 mt-3">
+          order date
+            <span className="text-lg text-gray-300 ml-4 capitalize">
+              {moment(data?.details?.createdAt).format("MMMM Do YYYY")}
+            </span>
+          </h3>
+
+          <h3 className="capitalize text-gray-400 mt-3">
+          received date
+            <span className="text-lg text-gray-300 ml-4 capitalize">
+              {moment(data?.details?.updatedAt).format("MMMM Do YYYY")}
             </span>
           </h3>
           <div className="flex flex-wrap">

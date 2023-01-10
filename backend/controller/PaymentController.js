@@ -24,8 +24,7 @@ class paymentController {
         cart: JSON.stringify(orderData),
       },
     });
-    console.log("🚀 ~ file: PaymentController.js:27 ~ paymentController ~ paymentProcess ~ customer", customer)
-    const session = await stripe.checkout.sessions.create({
+     const session = await stripe.checkout.sessions.create({
       shipping_address_collection: { allowed_countries: ["IN", "PK", "BD"] },
       // customer_email:user.email,
       shipping_options: [
@@ -97,16 +96,21 @@ class paymentController {
         customer = JSON.parse(customer?.metadata?.cart);
         customer.forEach(async (ctr) => {
           try {
-          const orderdata=  await OrderModel.create({
+            let reviewStatus = false;
+            const findOrder = await OrderModel.findOne({productId:ctr._id, userId:ctr.userId}).where('review').equals(true)
+            if(findOrder){
+              reviewStatus=true
+            }
+           await OrderModel.create({
               productId: ctr._id,
               userId: ctr.userId,
               size: ctr.size,
               color: ctr.color,
               quantity: ctr.quantity,
               address: data.customer_details.address,
+              review:reviewStatus
             });
-          console.log("🚀 ~ file: PaymentController.js:108 ~ paymentController ~ customer.forEach ~ orderdata", orderdata)
-
+         
             const product = await ProductModel.findOne({ _id: ctr._id });
             if (product) {
               let stock = product.stock - ctr.quantity;
